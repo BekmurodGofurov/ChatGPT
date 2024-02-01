@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+  <title>Veb-Sayt</title>
+  <!-- Bu erda CSS kutubxonalari yoziladi (Agar kerak bo'lsa) -->
+  <style>
+    /* CSS uslublari */
+  </style>
+</head>
+<body>
+    <table>
+        <thead>
+          <tr>
+            <th>Do'kon nomi</th>
+            <th>Model</th>
+            <th>Rangi</th>
+            <th>Xotira</th>
+            <th>Boshlang'ich to'lov</th>
+            <th>Oy turi</th>
+            <th>Oyiga to'lanadigan summa</th>
+            <th>Jami</th>
+            <th>Asl summa</th>
+            <th>Farqi</th>
+            <th>Foiz</th>
+            <th>Amallar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in items" :key="index">
+            <td>{{ item.doKonNomi }}</td>
+            <td>{{ item.model }}</td>
+            <td>{{ item.rangi }}</td>
+            <td>{{ item.xotira }}</td>
+            <td>{{ item.boshlangichTolov }}</td>
+            <td>{{ item.oyTuri }}</td>
+            <td>{{ item.oyigaTolanadiganSumma }}</td>
+            <td>{{ item.jami }}</td>
+            <td>{{ item.aslSumma }}</td>
+            <td>{{ item.farqi }}</td>
+            <td>{{ item.foizi }}</td>
+            <td>
+              <button @click="editItem(index)">Edit</button>
+              <button @click="deleteItem(index)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+  <script>
+   // Ma'lumotlar o'zgaruvchanini yaratish
+var items = [
+  {
+    doKonNomi: 'Do’kon 1',
+    model: 'Model 1',
+    rangi: 'Rang 1',
+    xotira: 'Xotira 1',
+    boshlangichTolov: 100,
+    oyTuri: 'Oy turi 1',
+    oyigaTolanadiganSumma: 50,
+    jami: 200,
+    aslSumma: 150,
+    farqi: 50,
+    foizi: '25%'
+  },
+  // Boshqa ma'lumotlar shu ko'rinishda qo'shiladi
+];
+
+// HTML'da jadvalga ma'lumotlarni qo'shish uchun funksiya
+function renderTable() {
+  var tableBody = document.querySelector('table tbody');
+
+  items.forEach(function(item) {
+    var row = document.createElement('tr');
+
+    // Har bir maydon uchun td elementini yaratish va qiymatlarni joylash
+    var fields = [
+      'doKonNomi', 'model', 'rangi', 'xotira', 'boshlangichTolov',
+      'oyTuri', 'oyigaTolanadiganSumma', 'jami', 'aslSumma', 'farqi', 'foizi'
+    ];
+
+    fields.forEach(function(field) {
+      var cell = document.createElement('td');
+      cell.textContent = item[field];
+      row.appendChild(cell);
+    });
+
+    // Edit va delete tugmalarni qo'shish
+    var actionsCell = document.createElement('td');
+    var editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.onclick = function() {
+      // Edit funksiyasini chaqirish
+      editItem(item);
+    };
+    actionsCell.appendChild(editButton);
+
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function() {
+      // Delete funksiyasini chaqirish
+      deleteItem(item);
+    };
+    actionsCell.appendChild(deleteButton);
+
+    row.appendChild(actionsCell);
+    tableBody.appendChild(row);
+  });
+}
+
+// Edit funksiyasi
+function editItem(item) {
+  // Kerakli o'zgartirishlarni bajarish
+  // Masalan, modal oynani ochish yoki boshqa joyga ma'lumotni ko'chirish
+}
+
+// Delete funksiyasi
+function deleteItem(item) {
+  // Ma'lumotni ro'yxatdan o'chirish
+  var index = items.indexOf(item);
+  if (index > -1) {
+    items.splice(index, 1);
+    // Jadvalni qayta yaratish va yangilash
+    var tableBody = document.querySelector('table tbody');
+    tableBody.innerHTML = '';
+    renderTable();
+  }
+}
+
+// Jadvalni yaratish
+renderTable();
+
+
+  </script>
+</body>
+</html>
